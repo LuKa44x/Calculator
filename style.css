@@ -11,6 +11,7 @@ html{
 .display{
     border: 1px solid gray;
     padding :35px;
+    text-align: center;
 }
 
 .gridContainer{

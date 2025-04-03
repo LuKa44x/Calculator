@@ -7,17 +7,30 @@ function operate(aTest , bTest){
 }
 
 
-
-
-
-
-
-
-
-
-
-let gridArray = [];
 const gridContainer = document.querySelector(".gridContainer");
+const display = document.querySelector(".display");
+
+
+
+
+
+const keyboardText = [
+"AC", "C", "%", "/",
+"7", "8", "9", "*",
+"4", "5", "6", "-",
+"1", "2", "3", "+",
+"0", ".", "=", "+"];
+
+let counter=0;
+let gridArray = [];
+
+gridCreate(5,4);
+
+function clickEvent(btnColumn){
+btnColumn.addEventListener("click", () =>{
+    display.textContent += btnColumn.textContent;
+});
+}
 
 function gridCreate(row, col ){
     for(let i=0; i < row; i++){
@@ -26,14 +39,17 @@ function gridCreate(row, col ){
     gridContainer.appendChild(divRow);
     for(let j=0; j<col; j++){
         const btnColumn = document.createElement("button");
+        btnColumn.textContent = keyboardText[counter];
+        counter++;
         btnColumn.classList.add("btnColumn")
         divRow.appendChild(btnColumn);
         gridArray.push(btnColumn);
+        clickEvent(btnColumn);
     }
     }
 
 }
-gridCreate(5,4);
+
 
 function add(a,b){
     return a + b;
