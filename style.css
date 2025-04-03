@@ -1,0 +1,31 @@
+html{
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.container{
+    border: 3px solid purple;
+}
+
+.display{
+    border: 1px solid gray;
+    padding :35px;
+}
+
+.gridContainer{
+   display: flex;
+   flex-direction: column;
+   
+}
+
+.divRow{
+    justify-content: center;
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    
+}
+.btnColumn{
+    padding:25px;
+}
