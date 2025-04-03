@@ -12,7 +12,7 @@ const display = document.querySelector(".display");
 
 
 
-
+const numbers=["0","1","2","3","4","5","6","7","8","9"];
 
 const keyboardText = [
 "AC", "C", "%", "/",
@@ -22,13 +22,55 @@ const keyboardText = [
 "0", ".", "=", "+"];
 
 let counter=0;
-let gridArray = [];
-
+let lastDigit ="";
+let displayStore = [];
+let displayStoreOnlyNumber=[];
+let temp;
 gridCreate(5,4);
 
+
+function checkSymbol(symbol){
+    switch(symbol){
+        case "+":
+            temp = "+";
+            break;
+        case "-":
+            temp = "-"
+            break;
+        case "*":
+            temp = "*";
+            break;
+        case "/":
+            temp = "/";
+            break;
+        case "AC":
+            display.innerHTML = "";
+            displayStore = [];
+            break;
+        case "C":
+            displayStore.splice(-2,2); // -2 perche leva l utlimo + la C che crea
+            display.textContent = displayStore.join().replace(/,/g,"");
+            break;
+        case "=":
+            displayStoreOnlyNumber = displayStore.filter(element => typeof element === 'number' && !isNaN(element));
+            display.innerHTML = "";
+            if(temp=="+") add(displayStoreOnlyNumber,displayStoreOnlyNumber);
+            else if(temp=="-") subtract(displayStoreOnlyNumber,displayStoreOnlyNumber);
+            else if(temp=="*") multiply(displayStoreOnlyNumber,displayStoreOnlyNumber);
+            else if(temp=="/") divide(displayStoreOnlyNumber,displayStoreOnlyNumber);
+            break;          
+    }
+        if( numbers.includes(lastDigit)==true) {
+            displayStore[displayStore.length -1] = parseInt(lastDigit);
+    }
+}
+// problema: array mi separa i numeri con piu di una cifra
 function clickEvent(btnColumn){
 btnColumn.addEventListener("click", () =>{
     display.textContent += btnColumn.textContent;
+    displayStore.push(btnColumn.textContent);
+    lastDigit = displayStore[displayStore.length -1];
+    checkSymbol(lastDigit);
 });
 }
 
@@ -43,26 +85,33 @@ function gridCreate(row, col ){
         counter++;
         btnColumn.classList.add("btnColumn")
         divRow.appendChild(btnColumn);
-        gridArray.push(btnColumn);
         clickEvent(btnColumn);
     }
     }
 
 }
 
-
+//prendere tutti i numeri invece che due con un ciclo
 function add(a,b){
-    return a + b;
+    let result =(a[0] + b[b.length -1]);
+    displayStore=[result];
+    return display.textContent =result;
 }
 
 function subtract(a,b){
-    return a - b;
+    let result =(a[0] - b[b.length -1]);
+    displayStore=[result];
+    return display.textContent =result;
 }
 
 function multiply(a,b){
-    return a * b;
+    let result =(a[0] * b[b.length -1]);
+    displayStore=[result];
+    return display.textContent =result;
 }
 
 function divide(a,b){
-    return a / b;
+    let result =(a[0] / b[b.length -1]);
+    displayStore=[result];
+    return display.textContent =result;
 }
