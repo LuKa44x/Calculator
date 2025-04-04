@@ -1,12 +1,3 @@
-let aTest = 3;
-let bTest = 5;
-let operator = "";
-
-function operate(aTest , bTest){
-    return add(aTest,bTest);
-}
-
-
 const gridContainer = document.querySelector(".gridContainer");
 const display = document.querySelector(".display");
 
@@ -20,14 +11,13 @@ const keyboardText = [
 "4", "5", "6", "-",
 "1", "2", "3", "+",
 "0", ".", "=", "+"];
-
+//mettere primo valore a 0 per fixare il +6=12
 let counter=0;
 let lastDigit ="";
 let displayStore = [];
 let displayStoreOnlyNumber=[];
 let temp;
 gridCreate(5,4);
-
 
 function checkSymbol(symbol){
     switch(symbol){
@@ -43,6 +33,9 @@ function checkSymbol(symbol){
         case "/":
             temp = "/";
             break;
+        case "%":
+            temp="%"
+            break;
         case "AC":
             display.innerHTML = "";
             displayStore = [];
@@ -54,10 +47,11 @@ function checkSymbol(symbol){
         case "=":
             displayStoreOnlyNumber = displayStore.filter(element => typeof element === 'number' && !isNaN(element));
             display.innerHTML = "";
-            if(temp=="+") add(displayStoreOnlyNumber,displayStoreOnlyNumber);
-            else if(temp=="-") subtract(displayStoreOnlyNumber,displayStoreOnlyNumber);
-            else if(temp=="*") multiply(displayStoreOnlyNumber,displayStoreOnlyNumber);
-            else if(temp=="/") divide(displayStoreOnlyNumber,displayStoreOnlyNumber);
+            if(temp=="+") add(displayStore,displayStore);
+            else if(temp=="-") subtract(displayStore,displayStore);
+            else if(temp=="*") multiply(displayStore,displayStore);
+            else if(temp=="/") divide(displayStore,displayStore);
+            else if(temp=="%") percentage(displayStoreOnlyNumber);
             break;          
     }
         if( numbers.includes(lastDigit)==true) {
@@ -91,27 +85,49 @@ function gridCreate(row, col ){
 
 }
 
-//prendere tutti i numeri invece che due con un ciclo
+//usare reduce con un findIndex per cercare i valori prima e dopo l operatore e fare l operazione
 function add(a,b){
-    let result =(a[0] + b[b.length -1]);
+    let result;
+    displayStore.pop(); // rimuove l uguale
+    if(a[0]=="+") { 
+        result = 0 + b[b.length -1];
+    } else result =(a[0] + b[b.length -1]); 
     displayStore=[result];
     return display.textContent =result;
 }
 
 function subtract(a,b){
-    let result =(a[0] - b[b.length -1]);
+    let result;
+    displayStore.pop(); 
+    if(a[0]=="-") { 
+        result = 0 - b[b.length -1];
+    } else result =(a[0] - b[b.length -1]); 
     displayStore=[result];
     return display.textContent =result;
 }
 
 function multiply(a,b){
-    let result =(a[0] * b[b.length -1]);
+    let result;
+    displayStore.pop(); 
+    if(a[0]=="*") { 
+        result = 0 * b[b.length -1];
+    } else result =(a[0] * b[b.length -1]); 
     displayStore=[result];
     return display.textContent =result;
 }
 
 function divide(a,b){
-    let result =(a[0] / b[b.length -1]);
+    let result;
+    displayStore.pop(); 
+    if(a[0]=="/") { 
+        result = 0 / b[b.length -1];
+    } else result =(a[0] / b[b.length -1]); 
+    displayStore=[result];
+    return display.textContent =result;
+}
+
+function percentage(a){
+    let result =(a[0] / 100);
     displayStore=[result];
     return display.textContent =result;
 }
