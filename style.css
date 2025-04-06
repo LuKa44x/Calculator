@@ -3,15 +3,27 @@ html{
     width: 100%;
     box-sizing: border-box;
 }
-
+body{
+    display: flex;
+    justify-content: center;
+}
 .container{
-    border: 3px solid purple;
+    border: 3px solid rgba(0, 0, 0, 0.137);
+    border-radius: 25px;
+    width:350px;
+    box-shadow: 0 0 20px rgba(68, 40, 170, 0.637);
+    background-color: rgba(124, 23, 145, 0.178);
 }
 
 .display{
-    border: 1px solid gray;
-    padding :35px;
-    text-align: center;
+    border: 1px solid rgb(21, 0, 46);
+    height: 90px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 30px;
+    background-color: white;
+    border-radius: 25px;
 }
 
 .gridContainer{
@@ -28,5 +40,9 @@ html{
     
 }
 .btnColumn{
-    padding:25px;
+    flex:0 0 50px;
+    height: 40px;
+    border-radius: 10px;
+    border: 1px solid rgb(21, 0, 46);
+    background-color: rgba(255, 255, 255, 0.295);
 }
